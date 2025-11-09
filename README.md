@@ -187,4 +187,55 @@ plt.show()
 
 
 
+## SparkR Example: Analyzing Health Data
+
+This example demonstrates how to use SparkR to handle large-scale health datasets, perform filtering, and calculate summary statistics. All data used here is simulated for demonstration purposes.
+
+```R
+# Load SparkR library
+library(SparkR)
+
+# Start Spark session
+sparkR.session(appName = "HealthDataAnalysis", master = "local[*]")
+
+# Simulate reading a large dataset (replace with actual CSV path in practice)
+df <- createDataFrame(data.frame(
+  patient_id = 1:1000,
+  age = sample(18:90, 1000, replace = TRUE),
+  gender = sample(c("Male", "Female"), 1000, replace = TRUE),
+  diagnosis = sample(c("Diabetes", "Hypertension", "None"), 1000, replace = TRUE)
+))
+
+# Filter patients over 65 with Diabetes
+df_filtered <- filter(df, df$age > 65 & df$diagnosis == "Diabetes")
+
+# Aggregate example: calculate average age by gender
+df_summary <- summarize(groupBy(df_filtered, df_filtered$gender), avg_age = mean(df_filtered$age))
+
+# Display results
+head(df_summary)
+
+
+
+### SparkR Example – Data Wrangling
+```R
+library(SparkR)
+
+# Initialize Spark session
+sparkR.session(appName = "HealthDataAnalysis")
+
+# Load example dataset
+patients <- read.df("patient_data.csv", source = "csv", header = "true", inferSchema = "true")
+
+# Filter and summarize data
+summary_df <- patients %>%
+  filter(patients$age > 18 & patients$diagnosis == "Diabetes") %>%
+  groupBy(patients$gender) %>%
+  summarize(mean_age = mean(patients$age), count = n())
+
+head(summary_df)
+
+
+
+
 ### "Initial portfolio setup" ###
