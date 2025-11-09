@@ -1,6 +1,6 @@
 > Note: This portfolio is a very early work in progress and will be updated regularly with new projects and analyses.
 
-### Initial portfoloio setup ###
+### Initial Portfolio Setup ###
 
 
 
